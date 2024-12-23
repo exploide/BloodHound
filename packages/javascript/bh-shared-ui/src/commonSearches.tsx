@@ -105,7 +105,7 @@ export const CommonSearches: CommonSearchType[] = [
         queries: [
             {
                 description: 'Kerberoastable members of Tier Zero / High Value groups',
-                cypher: `MATCH p=shortestPath((n:User)-[:MemberOf]->(g:Group))\nWHERE 'admin_tier_0' IN split(g.system_tags, ' ') AND n.hasspn=true\nAND n.enabled = true\nAND NOT n.objectid ENDS WITH '-502'\nRETURN p\nLIMIT 1000`,
+                cypher: `MATCH p=shortestPath((n:User)-[:MemberOf]->(g:Group))\nWHERE 'admin_tier_0' IN split(g.system_tags, ' ')\nAND n.hasspn=true\nAND n.enabled = true\nAND NOT n.objectid ENDS WITH '-502'\nAND NOT coalesce(n.gmsa, ' ') = true\nAND NOT coalesce(n.msa, ' ') = true\nRETURN p\nLIMIT 1000`,
             },
             {
                 description: 'All Kerberoastable users',
